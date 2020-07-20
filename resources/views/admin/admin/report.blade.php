@@ -12,7 +12,6 @@ active
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Thống kê doanh thu các nhà hàng có hóa đơn</h1>
-
 </div>
 
 <!-- DataTales Example -->
@@ -24,7 +23,7 @@ active
                     <tr class="text-center">
                         <th>Tên nhà hàng</th>
                         <th>Tên chủ nhà hàng</th>
-                        <th>Doanh thu</th>
+                        <th>Doanh thu (VNĐ)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,8 +39,8 @@ active
                                         </td>
                                         @endif
                                     @endforeach
-                                    <td>
-                                        {{$total->total}}
+                                    <td class="text-center">
+                                        {{number_format($total->total)}}
                                     </td>
                                 </tr>
                             @endif

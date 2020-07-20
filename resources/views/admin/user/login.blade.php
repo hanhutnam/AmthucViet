@@ -28,15 +28,26 @@
         <h1>Đăng nhập</h1>
         <div class="main-agileinfo">
             <div class="agileits-top">
+            <div class="bg-danger">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            </div>
                 <form action="{{route('user.login')}}" method="post">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="wrap-input100 validate-input m-b-16 " data-validate="Mời bạn nhập email tài khoản">
-                        <input class="input100 text-dark" type="email" name="username" placeholder="Email" required >
+                        <input class="input100 text-dark" type="email" name="username" placeholder="Email"  require >
                         <span class="focus-input100"></span>
                     </div>
 
                     <div class="wrap-input100 validate-input " data-validate="Mời bạn nhập mật khẩu">
-                        <input class="input100 text-dark" type="password" name="password" placeholder="Mật khẩu" required>
+                        <input class="input100 text-dark" type="password" name="password" placeholder="Mật khẩu" >
                         <span class="focus-input100"></span>
                     </div>
                     <div class="text-right p-t-13 p-b-23">
@@ -44,7 +55,7 @@
                             Quên
                         </span>
 
-                        <a href="#" class="text-danger">
+                        <a href="{{route('sendtomail')}}" class="text-danger">
                             mật khẩu
                         </a>
                     </div>

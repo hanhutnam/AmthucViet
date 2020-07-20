@@ -19,6 +19,10 @@ active
         @endif
         @endforeach
     </h1>
+    <div class="export">
+     <a href ="{{ route('export',['id'=>$restaurant_id]) }}" class="btn btn-info export" id="export-button"> Export file </a>
+</div>
+
 </div>
 
 <!-- DataTales Example -->
@@ -29,9 +33,9 @@ active
                 <thead>
                     <tr class="text-center">
                         <th>Mã hóa đơn</th>
-                        <th>Tên khách hàng</th>
-                        <th>Tổng tiền</th>
-                        <th>Ngày đặt hàng</th>
+                        <th style="width: 80px;">Tên khách hàng</th>
+                        <th style="width: 80px;">Tổng tiền (VNĐ)</th>
+                        <th style="width: 75px;">Ngày đặt hàng</th>
                         <th>Số điện thoại</th>
                         <th>Địa chỉ giao hàng</th>
                         <th>Trạng thái</th>
@@ -39,15 +43,14 @@ active
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($mang as $k => $ds)
-                    @foreach($bills as $bill)
-                    
+                    @foreach($mang as $k => $ds)
                     <tr class="text-left">
-                        <!-- //// -->
-                       @if($bill->id == $ds['id_bill'])
+
+                        @foreach($bills as $bill)
+                        @if($bill->id == $ds['id_bill'])
                         <td class="text-center">{{$bill->id}}</td>
-                       
-                        
+
+
                         <td> @foreach($customers as $customer)
                             @if($customer->id == $bill->id_customer)
                             {{$customer->name}}
@@ -55,15 +58,17 @@ active
                             @endforeach
                         </td>
 
-                        <td> <!--@foreach($billdetails as $billdetail)
-                            @if($billdetail->id_bill == $bill->id)
-                                {{$tien+=$billdetail->unit_price*$billdetail->qty}}
-                            @endif
-                            @endforeach--> {{$tien}}VNĐ 
+                        <td class="text-center">
+                            <!-- @foreach($bill_details as $billdetail)
+                                @if($billdetail->id_bill == $bill->id)
+                                    {{$tien += $billdetail->sum}}
+                                @endif
+                                @endforeach  -->
+                            {{number_format($tien)}} 
                             <!-- {{$tien=0}} -->
                         </td>
 
-                        <td>{{date('d-m-Y H:i:s', strtotime($bill->order_date))}}</td>
+                        <td>{{date('H:i:s d-m-Y ', strtotime($bill->order_date))}}</td>
                         <!-- //// -->
                         <td>@foreach($customers as $customer)
                             @if($customer->id == $bill->id_customer)
@@ -80,23 +85,26 @@ active
                         </td>
 
                         <td>
-                              @if($bill->status == 0)
-                              Chưa giao
-                              @else
-                              Đã giao
-                              @endif
+                            @if($bill->status == 0)
+                            Chưa giao
+                            @else
+                            Đã giao
+                            @endif
                         </td>
-                    
-                        
+
+
                         <td class="text-center">
-                              @if($bill->status == 0)
-                            <a href="{{route('bill.status',['id'=>$bill->id])}}" title="Đã giao"><i class="fas fa-check-circle"></i></a> |
-                              @endif
-                            <a href="{{route('bill.detail',['id'=>$bill->id])}}" title="Xem chi tiết"><i class="fas fa-info-circle"></i></a>
+                            @if($bill->status == 0)
+                            <a href="{{route('bill.status',['nh'=>$restaurant_id,'id'=>$bill->id])}}" title="Đã giao"><i
+                                    class="fas fa-check-circle"></i></a> |
+                            @endif
+                            <a href="{{route('bill.detail',['nh'=>$restaurant_id,'id'=>$bill->id])}}" title="Xem chi tiết"><i
+                                    class="fas fa-info-circle"></i></a>
                         </td>
                         @endif
+                        @endforeach
+
                     </tr>
-                    @endforeach
                     @endforeach
                 </tbody>
             </table>

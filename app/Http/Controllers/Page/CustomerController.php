@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Page;
 
 use Cart;
+use Mail;
 use App\Models\Area;
 use App\Models\Slide;
 use App\Models\Product;
+use App\Mail\ContactMail;
 use App\Models\Restaurant;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
@@ -22,7 +24,7 @@ class CustomerController extends Controller
     public function index()
     {
         $restaurants = Restaurant::all();
-        $product_new = Product::Where('new_product',1)->paginate(12);
+        $product_new = Product::Where('new_product',1)->orderBy('created_at', 'desc')->paginate(12);
         $product_promotion = Product::Where('promotion_price','<>',0)->get();//->paginate(12);
         $slides = Slide::all();
         return view('page.index',['slides'=>$slides, 'product_new'=>$product_new, 'product_promotion'=>$product_promotion,'restaurants'=>$restaurants]);
@@ -54,13 +56,17 @@ class CustomerController extends Controller
     	return view('page.detail',compact('sanpham','sp_tuongtu','nhahang'));
     }
 
+    public function searchName(Request $request)
+    {
+        $restaurants = Restaurant::all();
+        $products = Product::Where('name','like','%'.$request->s.'%')->paginate(20);
+        // dd($products);
+
+        return view('page.search',['products'=>$products,'restaurants'=>$restaurants]);
+    }
+
     
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function searchRetaurents(Request $request)
     {
         $retaurents = Restaurant::where('id_area',$request->area_id)->get()->toArray();
@@ -79,12 +85,6 @@ class CustomerController extends Controller
 
 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function getSearch(Request $request)
     {
         $restaurants = Restaurant::all();
@@ -118,14 +118,15 @@ class CustomerController extends Controller
         return view('page.search',['products'=>$products,'restaurants'=>$restaurants]);
     }
 
+    public function contact(){
+        return view('page.contact');
+    }
+
+    public function postcontact(Request $request)
+    {
+        Mail::to('hanhutnam@gmail.com')->send(new ContactMail($request->name,$request->sub,$request->content,$request->email));
+        return redirect()->back()->with('success','Cảm ơn bạn đã gửi liên hệ về chúng tôi!');
+    }
 }
 
 
-// if (data) {
-//     $("#importByTable").empty();
-//     $.each(data, function(key, value) {
-//         $("#importByTable").append('<div class="form-group">' +
-//             '<label> Loại câu hỏi: ' + value['type'] + ' (Số câu hỏi có trong ngân hàng câu hỏi: ' + value['total_question'] + ') </label>' +
-//             '<input type="number" name="' + value['key'] +'" class="form-control" max="'+value['total_question']+'"> </div>');
-//     });
-// }

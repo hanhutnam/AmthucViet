@@ -22,9 +22,23 @@
     <script src="vendors/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     @yield("function")
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 
-<body>
+<body id="page-top">
     <!-- header -->
     <div id="header">
         <div class="header-top">
@@ -59,12 +73,12 @@
                 </div>
                 <div class="pull-right beta-components space-left ov">
                     <div class="space10">&nbsp;</div>
-                    <!-- <div class="beta-comp">
-						<form role="search" method="get" id="searchform" action="/">
-					        <input type="text" value="" name="s" id="s" placeholder="Nhập từ khóa..." />
-					        <button class="fa fa-search" type="submit" id="searchsubmit"></button>
+                    <div class="beta-comp">
+						<form role="search" method="get" id="searchform" action="{{route('searching')}}">
+					        <input type="text" value="" name="s" id="s" placeholder="Nhập tên món ăn..." />
+					        <button class="fa fa-search" type="submit" title="Tìm kiếm" id="searchsubmit"></button>
 						</form>
-					</div> -->
+					</div>
 
                     <div class="beta-comp">
 
@@ -140,7 +154,7 @@
                             </ul>
                         </li>
                         <li><a>Giới thiệu</a></li>
-                        <li><a>Liên hệ</a></li>
+                        <li><a href="{{route('page.getcontact')}}">Liên hệ</a></li>
                     </ul>
                     <div class="clearfix"></div>
                 </nav>
@@ -172,7 +186,10 @@
         </div> <!-- .container -->
     </div>
     <!-- end footer -->
-
+<!-- 
+    <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a> -->
 
     <!-- include js files -->
     <script src="js/jquery.js"></script>

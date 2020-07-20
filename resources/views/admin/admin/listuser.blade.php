@@ -31,25 +31,20 @@ active
                         <th>Tên chủ nhà hàng</th>
                         <th>Email</th>
                         <!-- <th>Mật khẩu</th> -->
-                        <th>Ví tiền</th>
-                        <th>Tiền nợ</th>
+                        <th>Ví tiền(VNĐ)</th>
+                        <th>Tiền nợ(VNĐ)</th>
                         <!-- <th>Xem doanh thu</th> -->
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($users as $user)
                     <tr class="text-left">
-                        <td>{{$user->name}}</td>
+                        <td><a href="{{route('admin.menu',['id'=>$user->id])}}">{{$user->name}}</a></td>
                         <td>{{$user->email}}</td>
                         <!-- <td>{{$user->password}}</td> -->
-                        <td>{{$user->wallet}}</td>
-                        <td>{{$user->debt}}
+                        <td class="text-center">{{$user->wallet}}</td>
+                        <td class="text-center">{{$user->debt}}
                         </td>
-                        <!-- <td class="text-center">
-                            <a href=""><i class="fas fa-info-circle"></i></a> -->
-                            <!-- |
-                            <a onclick="return comfirm('Bạn có muốn xóa?')"  href=""  ><i class="fas fa-trash-alt"></i></a> -->
-                        <!-- </td> -->
                     </tr>
                     @endforeach
                 </tbody>

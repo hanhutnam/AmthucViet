@@ -49,18 +49,17 @@ Route::get('changepassword','LoginController@getchange')->name('user.change');
 
 Route::post('changepassword','LoginController@postchange')->name('user.change');
 
-// Route::get('/', 'CustomerController@getsearch');      //view search
+Route::get('/search/key', 'Page\CustomerController@searchName')->name('searching');      //search tên
 
 Route::post('search/retaurent', 'Page\CustomerController@searchRetaurents')->name('search.retaurent');
 
 Route::post('search/product', 'Page\CustomerController@searchProducts')->name('search.product');
 
 Route::get('search', 'Page\CustomerController@getSearch')->name('search');
-//mail
-// Route::get('sendmail','Page\MailController@mailCustomer')->name('mail.customer');
 
+Route::get('contact','Page\CustomerController@contact')->name('page.getcontact');
 
-
+Route::post('contact','Page\CustomerController@postcontact')->name('page.postcontact');
 
 // Route::group(['prefix' => 'page'], function () {
 
@@ -91,6 +90,19 @@ Route::get('admin/report', 'AdminController@report')->name('report');
 
 Route::get('admin/report_recharge', 'AdminController@recharge')->name('report.recharge');
 
+Route::get('admin/menu-res/{id}','AdminController@menu')->name('admin.menu');//id chủ nhà hàng
+
+Route::get('admin/bill-report/{id}','AdminController@billReport')->name('admin.billreport');//id nhà hàng
+
+Route::get('admin/forgetpassword','LoginController@getforgetpassword')->name('user.forgetpass');//quên mật khẩu    
+
+Route::get('admin/forgetpassword','LoginController@getsendmail')->name('sendtomail');//giao dien nhap email
+
+Route::post('admin/forgetpassword','LoginController@postsendmail')->name('sendmail');//gui email
+
+Route::get('admin/changepassword/{token}','LoginController@getforgetpassword')->name('getnewPass');
+
+Route::post('admin/changepassword/{token}','LoginController@postpassword')->name('postnewPass');//tao moi mat khau
 
  Route::group(['middleware'=>'adminmiddleware'],function(){
     
@@ -101,10 +113,6 @@ Route::get('admin/report_recharge', 'AdminController@recharge')->name('report.re
     Route::get('/admin', 'AdminController@amthucviet')->name('amthucviet');
 
     Route::group(['prefix' => 'admin'], function () {
-
-
-       
-
         Route::group(['prefix'=>'restaurant'], function (){
             Route::get('index', 'RestaurantController@index')->name('list.restaurant');
 
@@ -126,7 +134,6 @@ Route::get('admin/report_recharge', 'AdminController@recharge')->name('report.re
             Route::get('edit/{id}','UserController@edit')->name('user.edit');
 
             Route::post('update/{id}','UserController@update')->name('user.update');
-
             //thanh toán
             Route::get('naptien','PayController@index')->name('pay.index');
 
@@ -158,9 +165,11 @@ Route::get('admin/report_recharge', 'AdminController@recharge')->name('report.re
 
             Route::get('index/{id}', 'BillController@index')->name('bill.index');//id của nhà hàng
 
-            Route::get('detail/{id}', 'BillController@detail')->name('bill.detail');//id của hóa đơn
+            Route::get('detail/{nh}/{id}', 'BillController@detail')->name('bill.detail');//nh id cua nha hang //id của hóa đơn
 
-            Route::get('status/{id}', 'BillController@status')->name('bill.status');//id của hóa đơn
+            Route::get('status/{nh}/{id}', 'BillController@status')->name('bill.status');//id của hóa đơn
+
+            Route::get('export/{id}', 'BillController@export')->name('export');
         });
 
         Route::group(['prefix'=>'admin'], function(){
@@ -170,20 +179,3 @@ Route::get('admin/report_recharge', 'AdminController@recharge')->name('report.re
 
  });
 
-
-
-
-
-
- Route::get('pay', function(){
-	Schema::create('pay', function ($table) {
-        $table->increments('id');
-        $table->string('user_id');
-        $table->string('deal_code');
-        $table->string('amount');
-        $table->string('bank_code');
-        $table->string('card_type');
-        $table->string('order_info');
-        $table->timestamps();
-    });
-});

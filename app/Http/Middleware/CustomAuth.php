@@ -17,15 +17,6 @@ class CustomAuth
      */
     public function handle($request, Closure $next)
     {
-        // $path = $request->path();
-        // if(($path=="login"||$path=="register")&&(Session::get('user')))
-        // {
-        //     return redirect('/');
-        // }
-        // else if($path!="login" && Session::get('user'))
-        // {
-        //     return redirect()->route('user.login');
-        // }
         if(Auth::user())
         {
             return $next($request);

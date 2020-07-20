@@ -30,24 +30,27 @@
             <div class="agileits-top">
                 <form action="{{route('user.change')}}" method="post">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
-                    <div>Nhập mật khẩu hiện tại:</div>
+                    <div style="padding-bottom: 10px;">Nhập mật khẩu hiện tại:</div>
                     <div class="wrap-input100 validate-input m-b-16 " data-validate="Mời bạn nhập email tài khoản">
-                        <input class="input100 text-dark" type="password" name="password" placeholder="Mật khẩu hiện tại" required >
+                        <input class="input100 text-dark" type="password" name="password"
+                            placeholder="Mật khẩu hiện tại" required>
                         <span class="focus-input100"></span>
                     </div>
 
-                    <div>Nhập mật khẩu mới:</div>
+                    <div style="padding-bottom: 10px;">Nhập mật khẩu mới:</div>
                     <div class="wrap-input100 validate-input " data-validate="Mời bạn nhập mật khẩu">
-                        <input class="input100 text-dark" type="password" name="newpassword" placeholder="Mật khẩu" required>
+                        <input class="input100 text-dark" type="password" name="newpassword" placeholder="Mật khẩu"
+                            required>
                         <span class="focus-input100"></span>
                     </div>
 
-                    <div>Nhập lại mật khẩu:</div>
+                    <div style="padding-bottom: 10px;">Nhập lại mật khẩu:</div>
                     <div class="wrap-input100 validate-input " data-validate="Mời bạn nhập mật khẩu">
-                        <input class="input100 text-dark" type="password" name="renewpassword" placeholder="Mật khẩu" required>
+                        <input class="input100 text-dark" type="password" name="renewpassword" placeholder="Mật khẩu"
+                            required>
                         <span class="focus-input100"></span>
                     </div>
-                    <br>    
+                    <br>
 
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn">
@@ -55,9 +58,14 @@
                         </button>
                     </div>
                     <br>
+                    @if (session('success'))
+                    <div class="alert alert-success " role="alert">
+                        {{ session('success') }}
+                    </div>
+                    @endif
                     @if(session('message'))
                     <div class="alert alert-danger text-center">
-                        {{session('message')}}                    
+                        {{session('message')}}
                     </div>
                     @endif
                     <div>
@@ -81,5 +89,7 @@
     </div>
     <!-- //main -->
 </body>
-
+<script>
+$("div.alert").delay(2000).slideUp();
+</script>
 </html>

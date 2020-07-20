@@ -66,11 +66,11 @@
 
                                         <p class="single-item-price" style="font-size: 18px">
                                             @if($new->promotion_price==0)
-                                            <span class="flash-sale">{{number_format($new->unit_price)}} đồng</span>
+                                            <span class="flash-sale">{{number_format($new->unit_price)}} VNĐ</span>
                                             @else
-                                            <span class="flash-del">{{number_format($new->unit_price)}} đồng</span>
+                                            <span class="flash-del" style="font-size: 10px;">{{number_format($new->unit_price)}} VNĐ</span>
                                             <span class="flash-sale">{{number_format($new->promotion_price)}}
-                                                đồng</span>
+                                                VNĐ</span>
                                             @endif
                                         </p>
                                         <h5> @foreach($restaurants as $restaurant)
@@ -117,9 +117,9 @@
                                     <div class="single-item-body">
                                         <p class="single-item-title">{{$spkm->name}}</p>
                                         <p class="single-item-price" style="font-size: 18px">
-                                            <span class="flash-del">{{number_format($spkm->unit_price)}} đồng</span>
+                                            <span class="flash-del" style="font-size: 10px;">{{number_format($spkm->unit_price)}} VNĐ</span>
                                             <span class="flash-sale">{{number_format($spkm->promotion_price)}}
-                                                đồng</span>
+                                                VNĐ</span>
                                         </p>
                                         <h5> @foreach($restaurants as $restaurant)
                                             @if($restaurant->id == $spkm->id_restaurant)

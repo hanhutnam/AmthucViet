@@ -8,7 +8,6 @@
             <!-- <p class="pull-left">Có {{count($sp_theoloai)}} sản phẩm</p> -->
             <div class="clearfix"></div>
         </div>
-
         <div class="row data">
             @foreach($sp_theoloai as $sanpham)
             <div class="col-sm-3">
@@ -26,11 +25,11 @@
                         <p class="single-item-title">{{$sanpham->name}}</p>
                         <p class="single-item-price" style="font-size: 18px">
                             @if($sanpham->promotion_price !=0)
-                            <span class="flash-del">{{number_format($sanpham->unit_price)}} đồng</span>
+                            <span class="flash-del" style="font-size: 10px;">{{number_format($sanpham->unit_price)}} VNĐ</span>
                             <span class="flash-sale">{{number_format($sanpham->promotion_price)}}
-                                đồng</span>
+                                VNĐ</span>
                             @else
-                            <span>{{number_format($sanpham->unit_price)}} đồng</span>
+                            <span>{{number_format($sanpham->unit_price)}} VNĐ</span>
                             @endif
                         </p>
                         <strong style="font-size:18px"> @foreach($restaurants as $restaurant)

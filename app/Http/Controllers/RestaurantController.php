@@ -10,11 +10,7 @@ use Auth;
 
 class RestaurantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $restaurants = Restaurant::where('id_user',Auth::user()->id)->get();
@@ -22,25 +18,24 @@ class RestaurantController extends Controller
         return view('admin.restaurant.list',['restaurants'=>$restaurants],['areas'=>$areas]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $areas = Area::all();
         return view('admin.restaurant.create',['areas'=>$areas]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $req)
     {
+        $res = Restaurant::all();
+        foreach($res as $r)
+        {
+            if( $req->email == $r->email)
+            {
+                return redirect()->back()->with('error', 'Email đã tồn tại!');
+            }
+        }
+        
         $restaurant = new Restaurant();
         $restaurant->name = $req->name;
         $restaurant->address = $req->address;
@@ -49,26 +44,9 @@ class RestaurantController extends Controller
         $restaurant->id_area = $req->area;
         $restaurant->id_user  = Auth::user()->id;
         $restaurant->save();
-        return redirect()->back();
+        return redirect()->route('list.restaurant')->with('success', 'Tạo mới thành công!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $restaurant = Restaurant::findOrFail($id);
@@ -76,13 +54,6 @@ class RestaurantController extends Controller
         return view('admin.restaurant.update',['restaurant'=>$restaurant,'areas'=>$areas]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $req, $id)
     {
         $restaurant = Restaurant::findOrFail($id);
@@ -93,19 +64,13 @@ class RestaurantController extends Controller
         $restaurant->id_area = $req->area;
         $restaurant->id_user  = Auth::user()->id;
         $restaurant->save();
-        return redirect()->back();
+        return redirect()->route('list.restaurant')->with('success', 'Cập nhật thành công!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $restaurant = Restaurant::findOrFail($id);
         $restaurant->delete();
-        return redirect()->back();
+        return redirect()->route('list.restaurant')->with('success', 'Xóa thành công!');
     }
 }

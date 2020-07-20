@@ -11,6 +11,7 @@
 
   <title>Ẩm thực Việt - {{Auth::user()->name}}</title>
   <base href="{{asset('public')}}/asset_admin/">
+  <link rel="icon" type="image/png" href="images/icons/icon.png"/>
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -53,19 +54,13 @@
         <!-- Interface -->
       </div>
 <br>
-      <!-- Nav Item NHÀ HÀNG -->
+    @if(Auth::user()->wallet >= 30000 )
+      <!-- Nav Item NHÀ HÀNG -->  
       <li class="nav-item @yield('nhahang')">
         <a class="nav-link collapsed" href="{{route('list.restaurant')}}">
           <i class="fas fa-home fa-cog"></i>
           <span>Nhà hàng</span>
         </a>
-        <!-- <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="buttons.html">Danh sách nhà hàng</a>
-            <a class="collapse-item" href="cards.html">Tạo mới nhà hàng</a>
-          </div>
-        </div> -->
       </li>
 <br>
       <!-- Nav Item SẢN PHẨM -->
@@ -74,13 +69,6 @@
         <i class="fas fa-hamburger"></i>
           <span>Món Ăn</span>
         </a>
-        <!-- <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="buttons.html">Danh sách nhà hàng</a>
-            <a class="collapse-item" href="cards.html">Tạo mới nhà hàng</a>
-          </div>
-        </div> -->
       </li>
 <br>
       <!-- Nav Item hóa đơn -->
@@ -89,56 +77,19 @@
         <i class="fas fa-receipt"></i>
           <span>Đơn đặt hàng</span>
         </a>
-        <!-- <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="buttons.html">Danh sách nhà hàng</a>
-            <a class="collapse-item" href="cards.html">Tạo mới nhà hàng</a>
-          </div>
-        </div> -->
       </li>
-<br>
-      <!-- Divider-->
-      <!-- <hr class="sidebar-divider"> -->
-
-      <!-- Heading -->
-      <!-- <div class="sidebar-heading">
-        Addons
-      </div> -->
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
+      @else 
+      <li class="nav-item ">
+        <div class="nav-link collapsed">
+          <!-- <i class="fas fa-dollar-sign fa-2x"></i> -->
+          <h3>Ví tiền của bạn đã nhỏ hơn 30000 VNĐ </h3>
+          <span>(Nạp tiền để tiếp tục dịch vụ.)</span>
         </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
-          </div>
         </div>
-      </li> -->
-
-      <!-- Nav Item - Charts -->
-      <!-- <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li> -->
-
-      <!-- Nav Item - Tables -->
-      <!-- <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li>  -->
+        
+      </li>
+      @endif
+<br>
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">

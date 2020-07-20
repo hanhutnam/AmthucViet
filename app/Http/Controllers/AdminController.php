@@ -2,23 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
+use Auth;
 use App\Models\Pay;
-use App\Models\Restaurant;
-use App\Models\BillDetail;
 use App\Models\Bill;
+use App\Models\User;
+use App\Models\Product;
+use App\Models\Customer;
+use App\Models\BillDetail;
+use App\Models\Restaurant;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function amthucviet()
     {
-        return view('admin.index');
+        $arr_restaurant_id = Restaurant::where('id_user',Auth::user()->id)->select('id')->get()->toArray();
+        $qty_product = Product::whereIn('id_restaurant',$arr_restaurant_id)->count();
+        $qty_restaurant = Restaurant::where('id_user',Auth::user()->id)->select('id')->get()->count();
+        $bills = Bill::all();
+        $qty_bill = BillDetail::Wherein('id_restaurant',$arr_restaurant_id)->select('id_bill')->groupByRaw('id_bill')->get()->count();
+        $revenue_res = BillDetail::Wherein('id_restaurant',$arr_restaurant_id)->select('id_restaurant',BillDetail::raw('Sum(sum) as total'))->groupByRaw('id_restaurant')->get();
+        $total_revenue = 0;
+        foreach($revenue_res as $rr){
+            $total_revenue += $rr->total ;
+        }
+       
+        return view('admin.index',['qty_product'=>$qty_product,'qty_restaurant'=>$qty_restaurant,'qty_bill'=>$qty_bill,'total_revenue'=>$total_revenue]);
     }
 
     public function index()
@@ -27,11 +37,6 @@ class AdminController extends Controller
         return view('admin.admin.listuser',['users'=>$users]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function report()
     {
         $retaurants = Restaurant::all();
@@ -43,66 +48,51 @@ class AdminController extends Controller
         
         $sum = $sums->sortByDesc('total');
 
-        // $john = $sum::john('retaurant','sum.id_restaurant','=','retaurant.id');
-        //  dd($john);
         return view('admin.admin.report',['sum'=>$sum,'retaurants'=>$retaurants,'users'=>$users,'bill_details'=>$bill_details]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function recharge()
     {
         $pays = Pay::all();
-        $users = User::all();
-        return view('admin.admin.report_recharge',['pays'=>$pays,'users'=>$users]);
+        $users = User::all();  
+        $total =  Pay::select('order_info',Pay::raw('Sum(amount) as sum'))->groupByRaw('order_info')->get();
+        // dd($total->sum);
+        $total_pay = 0;
+        // dd($revenue_res->total);
+        foreach($total as $rr){
+            // dd($rr->sum);
+            $total_pay += $rr->sum ;
+        }
+        return view('admin.admin.report_recharge',['pays'=>$pays,'users'=>$users,'total_pay'=>$total_pay]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function menu($id)
     {
-        //
+        $restaurant = Restaurant::Where('id_user',$id)->get();
+        return view('admin.admin.menu',['restaurant'=>$restaurant]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function billReport($id)//id nhà hàng ->Where('status',1)
     {
-        //
+        $tien = 0;
+        $mang = BillDetail::Where('id_restaurant',$id)->select('id_bill')->groupByRaw('id_bill')->get()->toArray();
+        $bill_details = BillDetail::Where('id_restaurant',$id)->get();
+        $restaurants = Restaurant::all();
+        $customers = Customer::all();
+        $billdetails = BillDetail::all();
+        $bills = Bill::all();
+
+        $revenue_res = BillDetail::Where('id_restaurant',$id)->select('id_restaurant',BillDetail::raw('Sum(sum) as total'))->groupByRaw('id_restaurant')->get();
+        $total_revenue = 0;
+        // dd($revenue_res->total);
+        foreach($revenue_res as $rr){
+            $total_revenue += $rr->total ;
+        }
+        // dd($total_revenue);
+        return view('admin.admin.billreport',['tien'=>$tien,'mang'=>$mang,'bill_details'=>$bill_details,'total_revenue'=>$total_revenue,
+        'billdetails'=>$billdetails,'restaurants'=>$restaurants,'customers'=>$customers,'bills'=>$bills,'restaurant_id'=>$id]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

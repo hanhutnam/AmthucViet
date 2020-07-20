@@ -9,8 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Ẩm thực Việt</title>
     <base href="{{asset('public')}}/asset_admin/">
+    <link rel="icon" type="image/png" href="images/icons/icon.png"/>
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -192,7 +193,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2019</span>
+                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
             </footer>
@@ -204,7 +205,9 @@
     </div>
     <!-- End of Page Wrapper -->
 
-
+    <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

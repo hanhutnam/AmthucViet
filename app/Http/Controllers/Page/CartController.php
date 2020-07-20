@@ -13,7 +13,8 @@ use App\Models\Bill;
 use App\Models\BillDetail;
 use App\Models\User;
 use Cart;
-use App\Mail\TestMail;
+use Mail;
+use App\Mail\TestMails;
 // use Illuminate\Support\Collection;
 
 class CartController extends Controller
@@ -107,96 +108,22 @@ class CartController extends Controller
 
             $user = User::findOrFail($restaurant->id_user);
 
-            if( ($cart->quantity*$cart->price*0.08) < $user->wallet )
-                $user->wallet = ($user->wallet - ($cart->quantity*$cart->price*0.08));
-            else
-            {
-                $user->debt += ($cart->quantity*$cart->price*0.08) - $user->wallet;
-                $user->wallet = 0;
-            }   
-            $user->update();      
+            // if( ($cart->quantity*$cart->price*0.08) < $user->wallet )
+            //     $user->wallet = ($user->wallet - ($cart->quantity*$cart->price*0.08));
+            // else
+            // {
+            //     $user->debt += ($cart->quantity*$cart->price*0.08) - $user->wallet;
+            //     $user->wallet = 0;
+            // }   
+            // $user->update();      
             
         }
         $customer = $req->name;
-        \Mail::to($req->email)->send(new TestMail($carts,$total,$customer));
+        Mail::to($req->email)->send(new TestMails($carts,$total,$customer));
 
         Cart::clear();
         return redirect()->back()->with('thongbao','Đặt hàng thành công');
 
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

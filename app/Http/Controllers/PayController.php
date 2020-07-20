@@ -97,10 +97,8 @@ class PayController extends Controller
             $user->debt = 0;
         }
         $user->save();
-        
-
-        return redirect()->route('user.index')->with('thongbao' ,'Đã nạp tiền thành công!');
+        return redirect()->route('user.index')->with('success' ,'Nạp tiền thành công!');
     }
-    return redirect()->route('user.index')->with('thongbao' ,'Lỗi!');
+    return redirect()->route('user.index')->with('error' ,'Lỗi!');
     }
 }

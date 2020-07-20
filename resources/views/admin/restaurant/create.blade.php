@@ -11,9 +11,14 @@ active
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Tạo mới nhà hàng</h1>
-
 </div>
-
+<div>
+    @if (session('error'))
+    <div class="alert alert-danger " role="alert">
+        {{ session('error') }}
+    </div>
+    @endif
+</div>
 <div class="">
     <form action="{{route('store.restaurant')}}" method="post">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -74,5 +79,7 @@ active
 @endsection
 
 @section('js')
-
+<script>
+$("div.alert").delay(2000).slideUp();
+</script>
 @endsection

@@ -11,7 +11,7 @@ active
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Danh sách lịch sử nạp tiền</h1>
-
+    <h5><label for=""><b>Tổng số tiền đã được nạp vào website: </b></label> {{number_format($total_pay)}} VNĐ</h5>
 </div>
 
 <!-- DataTales Example -->
@@ -24,7 +24,7 @@ active
                         <th>Mã giao dịch</th>
                         <th>Tên chủ nhà hàng</th>
                         <th>Ngân hàng</th>
-                        <th>Số tiền</th>
+                        <th>Số tiền (VNĐ)</th>
                         <th>Ngày nạp</th>
                     </tr>
                 </thead>
@@ -37,9 +37,9 @@ active
                         <td>{{$user->name}}</td>
                         @endif
                         @endforeach
-                        <td>{{$pay->bank_code}}</td>
-                        <td>{{$pay->amount}}</td>
-                        <td>{{$pay->created_at->format('h:m:s, d/m/Y')}}</td>
+                        <td class="text-center">{{$pay->bank_code}}</td>
+                        <td class="text-center">{{number_format($pay->amount)}}</td>
+                        <td class="text-center">{{$pay->created_at->format('h:m:s, d/m/Y')}}</td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -12,12 +12,12 @@ active
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Danh sách món ăn của nhà hàng 
-    @foreach($restaurants as $restaurant)
+    <h1 class="h3 mb-0 text-gray-800">Danh sách món ăn của nhà hàng
+        @foreach($restaurants as $restaurant)
         @if($restaurant->id == $restaurant_id)
-            {{$restaurant->name}}
+        {{$restaurant->name}}
         @endif
-    @endforeach
+        @endforeach
     </h1>
     <a href="{{route('product.create',['id'=>$restaurant_id])}}"
         class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
@@ -27,6 +27,11 @@ active
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
+    @if (session('success'))
+    <div class="alert alert-success " role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -49,13 +54,13 @@ active
                         <td class="text-center"><img src="{{$product->link_img}}" alt="" height="35px"></td>
                         <td>{{$product->name}}</td>
                         <td>{{$product->describe}}</td>
-                        <td>{{$product->unit_price}}</td>
-                        <td>{{$product->promotion_price}}</td>
+                        <td class="text-center">{{$product->unit_price}}</td>
+                        <td class="text-center">{{$product->promotion_price}}</td>
                         <td>
                             @if($product->new_product==1)
-                                Sản phẩm mới
-                            @else 
-                                Không có
+                            Sản phẩm mới
+                            @else
+                            Không có
                             @endif
                         </td>
                         <td>
@@ -64,14 +69,16 @@ active
                             @endforeach
                         </td>
                         <td>@if($product->active==1)
-                                Hiển thị
-                            @else 
-                                Ẩn
+                            Hiển thị
+                            @else
+                            Ẩn
                             @endif</td>
                         <td class="text-center">
                             <a href="{{route('product.edit',['id'=>$product->id])}}"><i class="far fa-edit"></i></a>
                             |
-                            <a onclick="return comfirm('Bạn có muốn xóa?')" href="{{route('product.delete',['id'=>$product->id])}}"><i class="fas fa-trash-alt"></i></a>
+                            <a onclick="return comfirm('Bạn có muốn xóa?')"
+                                href="{{route('product.delete',['id'=>$product->id])}}"><i
+                                    class="fas fa-trash-alt"></i></a>
                         </td>
                     </tr>
                     @endforeach
@@ -90,4 +97,7 @@ active
 
 <!-- Page level custom scripts -->
 <script src="js/demo/datatables-demo.js"></script>
+<script>
+$("div.alert").delay(2000).slideUp();
+</script>
 @endsection

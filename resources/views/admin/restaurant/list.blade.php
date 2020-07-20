@@ -10,6 +10,7 @@ active
 
 @section('content')
 
+
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Danh sách nhà hàng</h1>
@@ -23,6 +24,11 @@ active
     <!-- <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
     </div> -->
+    @if (session('success'))
+    <div class="alert alert-success " role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -32,7 +38,7 @@ active
                         <th>Địa chỉ</th>
                         <th>Email</th>
                         <th>Số điện thoại</th>
-                        <th>Khu vực</th>
+                        <th style="width: 97px;">Khu vực</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -69,4 +75,7 @@ active
 
 <!-- Page level custom scripts -->
 <script src="js/demo/datatables-demo.js"></script>
+<script>
+$("div.alert").delay(2000).slideUp();
+</script>
 @endsection

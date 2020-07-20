@@ -12,7 +12,11 @@ active
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Thông tin cá nhân</h1>
 </div>
-<div class="row" style="font-size: 25px">@if(Session::has('thongbao')){{Session::get('thongbao')}}@endif</div>
+    @if (session('success'))
+    <div class="alert alert-success " role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
 <br>
 <div class="">
     <form class="">
@@ -67,4 +71,7 @@ active
 @section('js')
 
 <script src="https://sandbox.vnpayment.vn/paymentv2/lib/vnpay/vnpay.js"></script>
+<script>
+    $("div.alert").delay(2000).slideUp();
+</script>
 @endsection
